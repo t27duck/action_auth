@@ -2,6 +2,7 @@
 
 require "bundler/setup"
 require "action_auth"
+require "support/config_examples"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

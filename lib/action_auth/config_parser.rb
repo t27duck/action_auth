@@ -35,7 +35,7 @@ module ActionAuth
 
       Array(actions).each do |action|
         category_config[action.to_sym] ||= []
-        category_config[action.to_sym] << resolve
+        category_config[action.to_sym] << ActionResolver.new(resolve)
       end
     end
 

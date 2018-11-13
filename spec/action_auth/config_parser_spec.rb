@@ -36,23 +36,27 @@ RSpec.describe ActionAuth::ConfigParser do
           expect(config[:posts][:admin]).to have_key(:show)
         end
 
-        it "stores nil for the resolve option if not passed" do
+        it "stores a resolver for the resolve option if not passed" do
           config = ActionAuth::ConfigParser.parse(multiple_actions_for_category_no_resolve).config
           expect(config[:posts][:admin][:index]).to be_an(Array)
-          expect(config[:posts][:admin][:index][0]).to be_nil
+          expect(config[:posts][:admin][:index][0]).to be_an(ActionAuth::ActionResolver)
+          expect(config[:posts][:admin][:index][0].strategy).to be_nil
         end
 
-        it "stores the logic for the resolve option" do
+        it "stores a resolver for the resolve option" do
           config = ActionAuth::ConfigParser.parse(multiple_actions_for_category).config
           expect(config[:posts][:admin][:index]).to be_an(Array)
-          expect(config[:posts][:admin][:index][0]).to be_a(Proc)
+          expect(config[:posts][:admin][:index][0]).to be_an(ActionAuth::ActionResolver)
+          expect(config[:posts][:admin][:index][0].strategy).to be_a(Proc)
         end
 
         it "stores multiple calls to the same action's resolve options" do
           config = ActionAuth::ConfigParser.parse(multiple_calls_to_same_category).config
           expect(config[:posts][:admin][:index].size).to eq(2)
-          expect(config[:posts][:admin][:index][0]).to be_nil
-          expect(config[:posts][:admin][:index][1]).to be_a(Proc)
+          expect(config[:posts][:admin][:index][0]).to be_an(ActionAuth::ActionResolver)
+          expect(config[:posts][:admin][:index][0].strategy).to be_nil
+          expect(config[:posts][:admin][:index][1]).to be_an(ActionAuth::ActionResolver)
+          expect(config[:posts][:admin][:index][1].strategy).to be_a(Proc)
         end
       end
 

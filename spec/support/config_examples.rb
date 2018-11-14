@@ -85,6 +85,33 @@ RSpec.shared_context "config examples" do
     INPUT
   end
 
+  let(:admin_mod_reg_and_two_specials) do
+    <<~INPUT
+      role :admin do
+        includes :mod
+        category :posts, actions: [:index, :create]
+      end
+
+      role :mod do
+        includes :regular
+        category :posts, actions: [:index, :create]
+      end
+
+      role :regular do
+        category :posts, actions: :index
+        category :posts, actions: :create, resolve: ->(user) { user.pass }
+      end
+
+      role :special do
+        includes :regular
+      end
+
+      role :special2 do
+        category :posts, actions: :index
+      end
+    INPUT
+  end
+
   let(:invalid_admin_includes_itself) do
     <<~INPUT
       role :admin do

@@ -3,7 +3,7 @@
 module ActionAuth
   class RoleChainResolver
     def initialize(base_roles)
-      @base_roles = base_roles
+      @base_roles = Array(base_roles)
       @full_chain = []
     end
 

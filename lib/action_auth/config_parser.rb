@@ -42,6 +42,9 @@ module ActionAuth
     def includes(name)
       role_name = name.to_sym
       @chains[@current_role] ||= Set.new
+
+      raise ConfigParseError, "Role and included role cannot be the same" if @current_role == role_name
+
       @chains[@current_role].add(role_name)
     end
   end

@@ -80,6 +80,12 @@ RSpec.describe ActionAuth::ConfigParser do
           expect(chains[:mod]).to include(:regular)
           expect(chains[:regular]).to be_nil
         end
+
+        it "does not allow a role to include itself" do
+          expect do
+            ActionAuth::ConfigParser.parse(invalid_admin_includes_itself)
+          end.to raise_error(ActionAuth::ConfigParseError, /cannot be the same/)
+        end
       end
     end
   end

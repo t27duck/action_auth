@@ -85,5 +85,14 @@ RSpec.shared_context "config examples" do
     INPUT
   end
 
+  let(:invalid_admin_includes_itself) do
+    <<~INPUT
+      role :admin do
+        includes :admin
+        category :posts, actions: [:index, :create]
+      end
+    INPUT
+  end
+
   let(:resolve_option) { ->(u) { u.pass } }
 end

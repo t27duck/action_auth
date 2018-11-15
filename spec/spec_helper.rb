@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+ENV["RAILS_ENV"] ||= "test"
+
 require "bundler/setup"
 require "action_auth"
 require "support/config_examples"

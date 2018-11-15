@@ -47,7 +47,21 @@ RSpec.shared_context "config examples" do
     <<~INPUT
       role :admin do
         category :posts, actions: [:index]
+        category :posts, actions: [:show]
         category :posts, actions: [:index], resolve: ->(u) { u.pass }
+      end
+    INPUT
+  end
+
+  let(:admin_user_separate) do
+    <<~INPUT
+      role :admin do
+        category :posts, actions: [:index, :create]
+      end
+
+      role :regular do
+        category :posts, actions: :index
+        category :profile, actions: :show
       end
     INPUT
   end
@@ -56,12 +70,13 @@ RSpec.shared_context "config examples" do
     <<~INPUT
       role :admin do
         includes :regular
-        category :posts, actions: [:index, :create]
+        category :posts, actions: [:index, :create, :edit]
       end
 
       role :regular do
         category :posts, actions: :index
         category :posts, actions: :create, resolve: ->(user) { user.pass }
+        category :profile, actions: [:show]
       end
     INPUT
   end
@@ -70,17 +85,20 @@ RSpec.shared_context "config examples" do
     <<~INPUT
       role :admin do
         includes :mod
+        category :admins_only, actions: :index
         category :posts, actions: [:index, :create]
       end
 
       role :mod do
         includes :regular
         category :posts, actions: [:index, :create]
+        category :reports, actions: [:index]
       end
 
       role :regular do
         category :posts, actions: :index
         category :posts, actions: :create, resolve: ->(user) { user.pass }
+        category :profile, actions: [:show]
       end
     INPUT
   end
@@ -100,6 +118,7 @@ RSpec.shared_context "config examples" do
       role :regular do
         category :posts, actions: :index
         category :posts, actions: :create, resolve: ->(user) { user.pass }
+        category :profile, actions: :show
       end
 
       role :special do
@@ -108,6 +127,7 @@ RSpec.shared_context "config examples" do
 
       role :special2 do
         category :posts, actions: :index
+        category :club, actions: :show
       end
     INPUT
   end
@@ -127,13 +147,14 @@ RSpec.shared_context "config examples" do
 
   class SpecUser
     attr_reader :pass
+    attr_writer :role_symbols
 
     def initialize(pass = true)
       @pass = pass
     end
 
     def role_symbols
-      []
+      @role_symbols ||= []
     end
   end
 

@@ -12,7 +12,7 @@ module ActionAuth
     end
 
     def authorized?
-      resolvers = role_resolvers(action)
+      resolvers = role_resolvers
 
       return false if resolvers.empty?
 
@@ -32,7 +32,7 @@ module ActionAuth
       resolvers = roles.map do |role|
         actions = @category_config[role]
         actions[@action] if actions
-      end
+      end.flatten
 
       resolvers.delete_if(&:nil?)
       resolvers

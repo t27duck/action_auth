@@ -6,7 +6,7 @@ module ActionAuth
 
     def initialize(strat)
       unless strat.nil? || strat.respond_to?(:call)
-        raise ArgumentErrr, "Resolve strategry should be nil or a callable object"
+        raise ArgumentError, "Resolve strategry should be nil or a callable object"
       end
 
       @strategy = strat
@@ -15,10 +15,13 @@ module ActionAuth
     def resolve(user:, object: nil)
       return true if @strategy.nil?
 
-      if @strategy.arity == 1
-        @strategry.call(user)
+      case @strategy.arity
+      when 1
+        @strategy.call(user)
+      when 2
+        @strategy.call(user, object)
       else
-        @strategry.call(user, object)
+        @strategy.call
       end
     end
   end

@@ -121,5 +121,19 @@ RSpec.shared_context "config examples" do
     INPUT
   end
 
-  let(:resolve_option) { ->(u) { u.pass } }
+  let(:resolve_option_no_arg) { -> { true } }
+  let(:resolve_option_user_arg) { ->(u) { u.pass } }
+  let(:resolve_option_object_arg) { ->(u, o) { u.pass || o } }
+
+  class SpecUser
+    attr_reader :pass
+
+    def initialize(pass = true)
+      @pass = pass
+    end
+  end
+
+  let(:user) { SpecUser.new }
+
+  let(:user_no_pass) { SpecUser.new(false) }
 end

@@ -12,6 +12,8 @@ module ActionAuth
       @full_chain
     end
 
+    private
+
     def walk_chain(roles_to_walk)
       roles_to_walk.each do |new_base|
         next if @full_chain.include?(new_base)

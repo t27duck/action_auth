@@ -123,5 +123,37 @@ RSpec.describe ActionAuth::Authorizer do
         expect(subject.authorized?).to be_truthy
       end
     end
+
+    context "action definitions with a resolve strategy" do
+      it "allows access if action has no resolve and a failing resolve" do
+        ActionAuth::Config.parse(multiple_calls_to_same_category)
+        user_no_pass.role_symbols = [:admin]
+        subject = ActionAuth::Authorizer.new(user: user_no_pass, category: :posts, action: :index)
+        expect(subject.authorized?).to be_truthy
+      end
+
+      it "disallows access if the resolve fails" do
+        ActionAuth::Config.parse(single_action_for_category)
+        user_no_pass.role_symbols = [:admin]
+        subject = ActionAuth::Authorizer.new(user: user_no_pass, category: :posts, action: :index)
+        expect(subject.authorized?).to be_falsey
+      end
+
+      it "allows acces when passing in an object to the resolve strategy and the stratgey returns true" do
+        ActionAuth::Config.parse(single_action_for_category)
+        user.role_symbols = [:admin]
+        object = 3
+        subject = ActionAuth::Authorizer.new(user: user, category: :posts, action: :index, object: object)
+        expect(subject.authorized?).to be_truthy
+      end
+
+      it "disallows acces when passing in an object to the resolve strategy and the stratgey returns false" do
+        ActionAuth::Config.parse(single_action_for_category)
+        user.role_symbols = [:admin]
+        object = 0
+        subject = ActionAuth::Authorizer.new(user: user, category: :posts, action: :index, object: object)
+        expect(subject.authorized?).to be_truthy
+      end
+    end
   end
 end

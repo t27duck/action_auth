@@ -131,9 +131,13 @@ RSpec.shared_context "config examples" do
     def initialize(pass = true)
       @pass = pass
     end
+
+    def role_symbols
+      []
+    end
   end
 
   let(:user) { SpecUser.new }
-
   let(:user_no_pass) { SpecUser.new(false) }
+  let(:invalid_user) { Class.new }
 end

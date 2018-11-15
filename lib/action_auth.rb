@@ -7,10 +7,12 @@ require "action_auth/config"
 require "action_auth/config_parser"
 require "action_auth/guest_user"
 require "action_auth/role_chain_resolver"
+require "action_auth/utilities"
 
 module ActionAuth
   class Error < StandardError; end
   class ConfigParseError < StandardError; end
   class InvalidAuthorizeCall < StandardError; end
+  class InvalidObjectError < StandardError; end
   # Your code goes here...
 end

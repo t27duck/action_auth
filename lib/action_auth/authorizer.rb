@@ -3,7 +3,7 @@
 module ActionAuth
   class Authorizer
     def initialize(user:, category:, action:, object: nil)
-      @user = user
+      @user = Utilities.validate_user(user)
       @action = action
       @category_config = Config.config[category.to_sym]
       @object = object

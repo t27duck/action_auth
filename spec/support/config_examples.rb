@@ -153,19 +153,6 @@ RSpec.shared_context "config examples" do
   let(:resolve_option_user_arg) { ->(u) { u.pass } }
   let(:resolve_option_object_arg) { ->(u, o) { u.pass || o } }
 
-  class SpecUser
-    attr_reader :pass
-    attr_writer :role_symbols
-
-    def initialize(pass = true)
-      @pass = pass
-    end
-
-    def role_symbols
-      @role_symbols ||= []
-    end
-  end
-
   let(:user) { SpecUser.new }
   let(:user_no_pass) { SpecUser.new(false) }
   let(:invalid_user) { Class.new }

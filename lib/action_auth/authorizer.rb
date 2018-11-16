@@ -31,7 +31,7 @@ module ActionAuth
 
       resolvers = roles.map do |role|
         actions = @category_config[role]
-        actions[@action] if actions
+        actions[@action.to_sym] if actions
       end.flatten
 
       resolvers.delete_if(&:nil?)

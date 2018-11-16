@@ -17,3 +17,13 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+class SpecUser
+  attr_reader :pass
+  attr_accessor :role_symbols
+
+  def initialize(pass = true, roles: [])
+    @pass = pass
+    @role_symbols = roles
+  end
+end

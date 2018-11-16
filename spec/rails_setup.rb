@@ -24,13 +24,28 @@ class TestApp < Rails::Application
 
   routes.draw do
     resources :orders
+    resources :posts
   end
 end
 
-class OrdersController < ActionController::Base
+class ApplicationController < ActionController::Base
   include Rails.application.routes.url_helpers
+  include ActionAuth::RailsController
+
+  rescue_from ActionAuth::UserNotAuthorized do |_exception|
+    render inline: "Not authorized", status: 401
+  end
+
+  def current_user
+    @current_user ||= SpecUser.new
+  end
+end
+
+class OrdersController < ApplicationController
+  authorize_on :post
 
   def index
+    puts "ORDERS"
     render inline: "It worked"
   end
 end

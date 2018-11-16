@@ -15,5 +15,13 @@ module ActionAuth
       @config = parser.config
       @chains = parser.chains
     end
+
+    def self.current_user_method
+      @current_user_method ||= :current_user
+    end
+
+    def self.current_user_method=(method_name)
+      @current_user_method = method_name.to_sym
+    end
   end
 end

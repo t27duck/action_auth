@@ -8,11 +8,12 @@ require "action_auth/config_parser"
 require "action_auth/guest_user"
 require "action_auth/role_chain_resolver"
 require "action_auth/utilities"
+require "action_auth/rails_controller"
 
 module ActionAuth
   class Error < StandardError; end
   class ConfigParseError < StandardError; end
   class InvalidAuthorizeCall < StandardError; end
   class InvalidObjectError < StandardError; end
-  # Your code goes here...
+  class UserNotAuthorized < StandardError; end
 end

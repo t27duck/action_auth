@@ -107,12 +107,13 @@ RSpec.shared_context "config examples" do
     <<~INPUT
       role :admin do
         includes :mod
-        category :posts, actions: [:index, :create]
+        category :posts, actions: [:create]
+        category :admin_posts, actions: :index
       end
 
       role :mod do
         includes :regular
-        category :posts, actions: [:index, :create]
+        category :posts, actions: [:create]
       end
 
       role :regular do

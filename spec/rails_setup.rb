@@ -25,6 +25,9 @@ class TestApp < Rails::Application
   routes.draw do
     resources :orders
     resources :posts
+    namespace :admin do
+      resources :posts
+    end
   end
 end
 

@@ -11,7 +11,6 @@ require "action_auth/utilities"
 require "action_auth/rails_controller"
 
 module ActionAuth
-  class Error < StandardError; end
   class ConfigParseError < StandardError; end
   class InvalidAuthorizeCall < StandardError; end
   class InvalidObjectError < StandardError; end

@@ -14,15 +14,9 @@ module ActionAuth
 
     def resolve(user:, object: nil)
       return true if @strategy.nil?
+      return @strategy.call(user) if @strategy.arity == 1
 
-      case @strategy.arity
-      when 1
-        @strategy.call(user)
-      when 2
-        @strategy.call(user, object)
-      else
-        @strategy.call
-      end
+      @strategy.call(user, object)
     end
   end
 end

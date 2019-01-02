@@ -150,7 +150,6 @@ RSpec.shared_context "config examples" do
     INPUT
   end
 
-  let(:resolve_option_no_arg) { -> { true } }
   let(:resolve_option_user_arg) { ->(u) { u.pass } }
   let(:resolve_option_object_arg) { ->(u, o) { u.pass || o } }
 

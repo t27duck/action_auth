@@ -30,14 +30,6 @@ RSpec.describe ActionAuth::ActionResolver do
     end
 
     context "with a callable object as the strategy" do
-      context "with an arity of 0" do
-        it "calls the resolution" do
-          subject = ActionAuth::ActionResolver.new(resolve_option_no_arg)
-          expect(resolve_option_no_arg).to receive(:call).exactly(1).and_call_original
-          expect(subject.resolve(user: user)).to be_truthy
-        end
-      end
-
       context "with an arity of 1" do
         it "calls the resolution and passes the user" do
           subject = ActionAuth::ActionResolver.new(resolve_option_user_arg)

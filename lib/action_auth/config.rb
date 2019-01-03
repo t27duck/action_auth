@@ -10,6 +10,10 @@ module ActionAuth
       @chains ||= {}
     end
 
+    def self.read(path)
+      parse(File.read(path))
+    end
+
     def self.parse(data)
       parser = ConfigParser.parse(data)
       @config = parser.config

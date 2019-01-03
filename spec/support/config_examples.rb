@@ -119,6 +119,7 @@ RSpec.shared_context "config examples" do
       role :regular do
         category :posts, actions: :index
         category :posts, actions: :create, resolve: ->(user) { user.pass }
+        category :posts, actions: :update, resolve: ->(user, object) { user.pass }
         category :profile, actions: :show
       end
 

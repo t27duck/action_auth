@@ -22,7 +22,12 @@ module ActionAuth
 
       def build_authorize_method(method_name, with_object:)
         define_method(method_name) do
-          obj = instance_variable_get("@#{with_object}") if with_object
+          obj = nil
+          if with_object
+            raise ActionAuth::ObjectNotSet unless instance_variable_defined?("@#{with_object}")
+
+            obj = instance_variable_get("@#{with_object}")
+          end
           auth = ActionAuth::Authorizer.new(
             user: action_auth_user,
             category: controller_path.tr("\/", "_"),
